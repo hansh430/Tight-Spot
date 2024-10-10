@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,10 @@ using UnityEngine;
 public class Route : MonoBehaviour
 {
     [HideInInspector] public bool isActive = true;
+    [HideInInspector] public Vector3[] linePoints;
+    [SerializeField] private LineDrawer lineDrawer;
+
+    [Space]
     public Line line;
     public Park park;
     public Car car;
@@ -13,6 +18,19 @@ public class Route : MonoBehaviour
     [Header("Colors :")]
     public Color carColor;
     [SerializeField] private Color lineColor;
+    private void Start()
+    {
+        lineDrawer.OnParkLinkedToLine += OnParkLinkedToLineHandler;
+    }
+
+    private void OnParkLinkedToLineHandler(Route route, List<Vector3> points)
+    {
+        if (route == this)
+        {
+            linePoints = points.ToArray();
+            GameController.Instance.RegisterRoutes(this);
+        }
+    }
 
     public void Deactivate()
     {

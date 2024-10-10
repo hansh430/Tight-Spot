@@ -15,18 +15,18 @@ public class Line : MonoBehaviour
         pointFixedYAxis = lineRenderer.GetPosition(0).y;
         Clear();
     }
-    private void Init()
+    public void Init()
     {
         gameObject.SetActive(true);
     }
-    private void Clear()
+    public void Clear()
     {
         gameObject.SetActive(false);
         lineRenderer.positionCount = 0;
         pointsCount = 0;
         points.Clear();
     }
-    private void AddPoint(Vector3 newPoint)
+    public void AddPoint(Vector3 newPoint)
     {
         newPoint.y = pointFixedYAxis;
         if (pointsCount >= 1 && Vector3.Distance(newPoint, GetLastPoint()) < minPointDistance)
@@ -34,7 +34,7 @@ public class Line : MonoBehaviour
         points.Add(newPoint);
         pointsCount++;
         lineRenderer.positionCount = pointsCount;
-        lineRenderer.SetPosition(pointsCount-1, newPoint);
+        lineRenderer.SetPosition(pointsCount - 1, newPoint);
     }
     private Vector3 GetLastPoint()
     {
