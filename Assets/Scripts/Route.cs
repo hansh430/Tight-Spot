@@ -22,7 +22,10 @@ public class Route : MonoBehaviour
     {
         lineDrawer.OnParkLinkedToLine += OnParkLinkedToLineHandler;
     }
-
+    private void OnDestroy()
+    {
+        lineDrawer.OnParkLinkedToLine -= OnParkLinkedToLineHandler;
+    }
     private void OnParkLinkedToLineHandler(Route route, List<Vector3> points)
     {
         if (route == this)
@@ -40,12 +43,10 @@ public class Route : MonoBehaviour
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        Debug.Log("1");
-        if (!Application.isPlaying && line!=null && car!=null && park!=null)
+        if (!Application.isPlaying && line != null && car != null && park != null)
         {
-            Debug.Log("2");
-            line.lineRenderer.SetPosition(0,car.bottomTransform.position);
-            line.lineRenderer.SetPosition(1,park.transform.position);
+            line.lineRenderer.SetPosition(0, car.bottomTransform.position);
+            line.lineRenderer.SetPosition(1, park.transform.position);
 
             car.SetColor(carColor);
             park.SetColor(carColor);
